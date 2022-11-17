@@ -1,0 +1,20 @@
+{
+  "name": "com.ndu_games.resource-loader",
+  "displayName": "Resource Loader",
+  "version": "1.0.0",
+  "description": "This package wraps Unitys Resource feature.",
+  "unity": "2021.3",
+  "unityRelease": "12f1",
+  "author": {
+    "name": "Nils Urbach"
+  },
+  "license": "MIT",
+  "licensesUrl": "https://spdx.org/licenses/MIT.html",
+  "hideInEditor": false,
+  "keywords": [
+    "Resource",
+    "Resources",
+    "Load",
+    "Loader"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+	"name": "NduGames.ResourceLoader.Tests",
+	"references": [
+		"NduGames.ResourceLoader"
+	],
+	"optionalUnityReferences": [
+		"TestAssemblies"
+	]
+}

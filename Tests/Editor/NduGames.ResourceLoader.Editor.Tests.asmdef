@@ -1,0 +1,12 @@
+{
+	"name": "NduGames.ResourceLoader.Editor.Tests",
+	"references": [
+		"NduGames.ResourceLoader.Editor"
+	],
+	"optionalUnityReferences": [
+		"TestAssemblies"
+	],
+	"includePlatforms": [
+		"Editor"
+	]
+}

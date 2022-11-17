@@ -1,0 +1,9 @@
+{
+	"name": "NduGames.ResourceLoader.Editor",
+	"references": [
+		"NduGames.ResourceLoader"
+	],
+	"includePlatforms": [
+		"Editor"
+	]
+}
