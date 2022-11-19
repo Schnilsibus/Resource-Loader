@@ -34,7 +34,7 @@ namespace NduGames.ResourceLoader
         [SerializeField]
         private string _directoryPath;
 
-        public string directoryPath
+        public string DirectoryPath
         {
             get
             {
@@ -54,6 +54,31 @@ namespace NduGames.ResourceLoader
                 {
                     _directoryPath = value;
                 }
+            }
+        }
+
+        public Resource(string name, string path)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name", "The name cannot be null.");
+            }
+            else if (path == null)
+            {
+                throw new ArgumentNullException("path", "The path cannot be null.");
+            }
+            else if (! IsNameValid(name))
+            {
+                throw new ArgumentException("The name connot contain a '.'. File endings must not be specified.", "name");
+            }
+            else if (! IsPathValid(path))
+            {
+                throw new ArgumentException("The path must be in the format '<dir-1>/<dir-2>/.../<dir-n>'.", "path");
+            }
+            else
+            {
+                _name = name;
+                _directoryPath = path;
             }
         }
 
@@ -80,7 +105,12 @@ namespace NduGames.ResourceLoader
             }
         }
 
-        public override string ToString()
+        public override int GetHashCode()
+        {
+            return _name.GetHashCode();
+        }
+
+        public string GetFullPath()
         {
             return $"{_directoryPath}/{_name}";
         }
