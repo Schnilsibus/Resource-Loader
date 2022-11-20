@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace NduGames.ResourceLoader
 {
@@ -49,7 +50,6 @@ namespace NduGames.ResourceLoader
             else
             {
                 _resources.Add(resource);
-                Debug.Log($"AddedResource: '{resource.GetFullPath()}");
                 return _resources.IndexOf(resource);
             }
         }
@@ -66,31 +66,64 @@ namespace NduGames.ResourceLoader
                 {
                     _resources[index].Name = resource.Name;
                     _resources[index].DirectoryPath = resource.DirectoryPath;
-                } catch (IndexOutOfRangeException ex)
-                {
-                    throw ex;
+                    return _resources.IndexOf(resource);
                 }
-                return _resources.IndexOf(resource);
+                catch (IndexOutOfRangeException ex)
+                {
+                    throw new IndexOutOfRangeException($"The index {index} is out of range. Currently {_resources.Count} resources exist.", ex);
+                }
             }
         }
 
-        public void RemoveResource(Resource resource)
+        public int EditResource(Resource oldResource, Resource newResource)
         {
-            _resources.Remove(resource);
+            if (! _resources.Contains(oldResource))
+            {
+                throw new ArgumentException($"The resource '{oldResource.Name}' doesn't exist.", "oldResource");
+            }
+            else if (_resources.Contains(newResource))
+            {
+                throw new ArgumentException($"The resource '{newResource.Name}' already exists.", "newResource");
+            }
+            else
+            {
+                int index = _resources.IndexOf(oldResource);
+                _resources.Insert(index, newResource);
+                return index;
+            }
+        }
+
+        public bool RemoveResource(Resource resource)
+        {
+            return _resources.Remove(resource);
         }
 
         public T LoadResource<T>(string name) where T : UnityEngine.Object
         {
             Resource resource = new Resource("", name);
-            resource = _resources[_resources.IndexOf(resource)];
-            Debug.Log($"{_subDirectoryPath}/{resource.GetFullPath()}");
+            int index = _resources.IndexOf(resource);
+            if (index == -1)
+            {
+                throw new ArgumentException($"The resource '{name}' doesn't exist.", "name");
+            }
+            resource = _resources[index];
+            StringBuilder stringBuilder = new StringBuilder(_subDirectoryPath);
             if (String.IsNullOrEmpty(_subDirectoryPath))
             {
-                return Resources.Load<T>($"{resource.GetFullPath()}");
+                stringBuilder.Append(resource.GetFullPath());
             }
             else
             {
-                return Resources.Load<T>($"{_subDirectoryPath}/{resource.GetFullPath()}");
+                stringBuilder.Append($"/{resource.GetFullPath()}");
+            }
+            T loadedResource = Resources.Load<T>(stringBuilder.ToString());
+            if (loadedResource == null)
+            {
+                throw new ResourceNotFoundException(this, resource);
+            }
+            else
+            {
+                return loadedResource;
             }
         }
 
