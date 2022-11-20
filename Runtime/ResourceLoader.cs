@@ -49,6 +49,7 @@ namespace NduGames.ResourceLoader
             else
             {
                 _resources.Add(resource);
+                Debug.Log($"AddedResource: '{resource.GetFullPath()}");
                 return _resources.IndexOf(resource);
             }
         }
@@ -82,7 +83,20 @@ namespace NduGames.ResourceLoader
         {
             Resource resource = new Resource("", name);
             resource = _resources[_resources.IndexOf(resource)];
-            return Resources.Load<T>($"{_subDirectoryPath}/{resource.GetFullPath()}");
+            Debug.Log($"{_subDirectoryPath}/{resource.GetFullPath()}");
+            if (String.IsNullOrEmpty(_subDirectoryPath))
+            {
+                return Resources.Load<T>($"{resource.GetFullPath()}");
+            }
+            else
+            {
+                return Resources.Load<T>($"{_subDirectoryPath}/{resource.GetFullPath()}");
+            }
+        }
+
+        private void Awake()
+        {
+            _resources = new List<Resource>();
         }
     }
 }

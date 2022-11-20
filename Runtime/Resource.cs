@@ -57,7 +57,7 @@ namespace NduGames.ResourceLoader
             }
         }
 
-        public Resource(string name, string path)
+        public Resource(string path, string name)
         {
             if (name == null)
             {
@@ -112,7 +112,14 @@ namespace NduGames.ResourceLoader
 
         public string GetFullPath()
         {
-            return $"{_directoryPath}/{_name}";
+            if (String.IsNullOrEmpty(_directoryPath))
+            {
+                return $"{_name}";
+            }
+            else
+            {
+                return $"{_directoryPath}/{_name}";
+            }
         }
     }
 }
