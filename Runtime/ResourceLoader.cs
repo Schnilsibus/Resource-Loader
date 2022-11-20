@@ -8,6 +8,7 @@ namespace NduGames.ResourceLoader
 {
     public class ResourceLoader : ScriptableObject
     {
+        #region declarations
         [SerializeField]
         private string _subDirectoryPath;
 
@@ -36,12 +37,9 @@ namespace NduGames.ResourceLoader
 
         [SerializeField]
         private List<Resource> _resources;
+        #endregion
 
-        private bool IsPathValid(string path)
-        {
-            return (!path.Contains('\\'));
-        }
-
+        #region public methods
         public int AddResource(Resource resource)
         {
             if (_resources.Contains(resource))
@@ -127,10 +125,20 @@ namespace NduGames.ResourceLoader
                 return loadedResource;
             }
         }
+        #endregion
 
+        #region conviniencs methods
+        private bool IsPathValid(string path)
+        {
+            return (!path.Contains('\\'));
+        }
+        #endregion
+
+        #region messages
         private void Awake()
         {
             _resources = new List<Resource>();
         }
+        #endregion
     }
 }

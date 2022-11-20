@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace NduGames.ResourceLoader
 {
+    [Serializable]
     public class Resource
     {
+        #region declarations
         [SerializeField]
         private string _name;
 
@@ -56,7 +58,9 @@ namespace NduGames.ResourceLoader
                 }
             }
         }
+        #endregion
 
+        #region constructors
         public Resource(string path, string name)
         {
             if (name == null)
@@ -81,7 +85,23 @@ namespace NduGames.ResourceLoader
                 _directoryPath = path;
             }
         }
+        #endregion
 
+        #region public methods
+        public string GetFullPath()
+        {
+            if (String.IsNullOrEmpty(_directoryPath))
+            {
+                return $"{_name}";
+            }
+            else
+            {
+                return $"{_directoryPath}/{_name}";
+            }
+        }
+        #endregion
+
+        #region convinience methods
         private bool IsNameValid(string name)
         {
             return (! name.Contains('.'));
@@ -91,7 +111,9 @@ namespace NduGames.ResourceLoader
         {
             return (! path.Contains('\\'));
         }
+        #endregion
 
+        #region System.Object overrides
         public override bool Equals(object obj)
         {
             if (obj == null || ! this.GetType().Equals(obj.GetType()))
@@ -109,18 +131,7 @@ namespace NduGames.ResourceLoader
         {
             return _name.GetHashCode();
         }
-
-        public string GetFullPath()
-        {
-            if (String.IsNullOrEmpty(_directoryPath))
-            {
-                return $"{_name}";
-            }
-            else
-            {
-                return $"{_directoryPath}/{_name}";
-            }
-        }
+        #endregion
     }
 }
 
