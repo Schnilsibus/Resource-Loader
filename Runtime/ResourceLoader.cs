@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace NduGames.ResourceLoader
 {
@@ -119,7 +120,7 @@ namespace NduGames.ResourceLoader
             T loadedResource = Resources.Load<T>(stringBuilder.ToString());
             if (loadedResource == null)
             {
-                throw new ResourceNotFoundException(this, resource);
+                throw new FileNotFoundException($"The resource '{name}' couldn't be found. Path: '{stringBuilder.ToString()}'", stringBuilder.ToString());
             }
             else
             {
